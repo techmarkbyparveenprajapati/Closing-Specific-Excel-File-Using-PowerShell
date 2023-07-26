@@ -1,0 +1,22 @@
+# Get the path to the Excel file
+$excelFile = "YOUR_FILE_PATH_HERE"
+
+# Get the file name of the Excel file
+$fileName = [System.IO.Path]::GetFileName($excelFile)
+
+# Get the handle to the Excel file
+$excelHandle = [System.Runtime.InteropServices.Marshal]::GetActiveObject("Excel.Application")
+
+# Close the Excel file
+$excelHandle.Workbooks.Item($fileName).Close()
+
+# Release the handle to the Excel file
+[System.Runtime.InteropServices.Marshal]::ReleaseComObject($excelHandle)
+
+
+
+
+
+$excelHandle = [System.Runtime.InteropServices.Marshal]::GetActiveObject("Excel.Application")
+$excelHandle.DisplayAlerts = $false
+$excelHandle.Workbooks | %{if($_.Name -imatch "Book1"){$_.Close()}} 
